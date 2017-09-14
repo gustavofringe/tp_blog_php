@@ -6,22 +6,20 @@ $bdd = $pdo->prepare("SELECT id, id_billet,auteur, commentaire, DATE_FORMAT(date
 $db->execute([$id]);
 $bdd->execute([$id]);
 $blog = $db->fetch();
-$comments = $bdd->fetch();
+$comments = $bdd->fetchAll();
 ?>
 <?php include 'partials/header.php'; ?>
 <h1><?= $blog->titre; ?></h1>
 <p><?= $blog->contenu; ?></p>
 <p><?= $blog->date; ?></p>
-<h2><?= $comments->auteur; ?></h2>
-    <p><?= $comments->commentaire; ?></p>
-    <p><?= $comments->date_commentaire; ?></p>
+<?php foreach ($comments as $item):?>
+<h2><?= $item->auteur; ?></h2>
+    <p><?= $item->commentaire; ?></p>
+    <p><?= $item->date_commentaire; ?></p>
+<?php endforeach;?>
 <a href="/">Revenir</a>
 <h3>Ajouter un commentaire</h3>
 <form action="new_comment.php" method="post">
-    <div class="form-group">
-        <label for="title">Titre</label>
-        <input type="text" class="form-control"name="title" id="title">
-    </div>
     <div class="form-group">
         <label for="content">Contenu</label>
         <textarea class="form-control" id="content" name="content"></textarea>
@@ -30,6 +28,7 @@ $comments = $bdd->fetch();
         <label for="autor">Auteur</label>
         <input type="text" class="form-control" id="autor" name="autor">
     </div>
+    <input type="hidden" name="id" value="<?=$blog->id;?>">
     <button class="btn btn-primary">Send</button>
 </form>
 <?php include 'partials/footer.php'; ?>

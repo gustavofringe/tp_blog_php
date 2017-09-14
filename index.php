@@ -4,9 +4,6 @@ $bdd = $pdo->query("SELECT id, titre,contenu, DATE_FORMAT(date_creation, '%d/%m/
 $bdd->execute();
 $blog = $bdd->fetchAll();
 ?>
-<pre>
-    <?php print_r($blog); ?>
-</pre>
 <?php include 'partials/header.php'; ?>
 <h1>Mon super blog</h1>
 <?php foreach($blog as $content): ?>
