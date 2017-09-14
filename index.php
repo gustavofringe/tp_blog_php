@@ -1,9 +1,18 @@
-
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+<?php
+include 'db/db.php';
+$bdd = $pdo->query("SELECT titre,contenu, DATE_FORMAT(date_creation, '%d/%m/%Y à %Hh%imin%ss') AS date FROM billets");
+$bdd->execute();
+$blog = $bdd->fetchAll();
+?>
+<?php include 'partials/header.php'; ?>
+<h1>Mon super blog</h1>
+<?php foreach($blog as $content): ?>
+<ul class="list-group mt-5">
+    <li class="list-group-item"><?= $content['titre']; ?></li>
+    <li class="list-group-item"><?= $content['contenu']; ?></li>
+    <li class="list-group-item">Poster le <?= $content['date']; ?></li>
+    <li class="list-group-item"><a href="comments.php?title=<?= $content['titre']; ?>">Commentaires</a></li>
+</ul>
+<?php endforeach; ?>
 
 
